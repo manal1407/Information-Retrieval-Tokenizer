@@ -15,9 +15,14 @@ public class Homework1 {
             how to deal with numbers?
             how to deal with acronyms?
             how to deal with hyphens?
+            are non-alphanumeric characters being displayed?
+    TODO: sanitize tokens.
+
      */
     static TreeMap<String, Integer> tokens = new TreeMap<String, Integer>();
+    static TreeMap<String, Integer> stemTokens = new TreeMap<String, Integer>();
     static int numberOfTokens=0;
+    static int numberOfStems=0;
 
     public static void main(String args[]){
         String filePath = "E:\\Sem 5\\Information Retrieval\\Homework\\Homework1\\Cranfield_Collection";
@@ -29,31 +34,62 @@ public class Homework1 {
             e.printStackTrace();
         }
 
-/*
-        TODO: Update TreeMap traversal to eliminate using two collections
-         */
         Iterator<Map.Entry<String, Integer>> entryIterator = tokens.entrySet().iterator();
 
-     /*   while(entryIterator.hasNext()){
-            Map.Entry<String, Integer> entry = entryIterator.next();
-               System.out.println(entry.getKey() + " " + entry.getValue());
-        }
-*/
-/*
-        Collection collection = tokens.keySet();
-        Collection collectionValues = tokens.values();
-        Iterator<String> iterator = collection.iterator();
-        Iterator<Integer> valueIterator = collectionValues.iterator();
-
-        while(iterator.hasNext()){
-            System.out.println(iterator.next() + " " + valueIterator.next());
-        }
-*/
         System.out.println("Number of tokens: " + numberOfTokens);
         System.out.println("Number of unique tokens: " + tokens.size());
         System.out.println("Number of tokens that occur only once: " + countOnes(tokens));
         System.out.println("Number of files: " + countOfFiles);
+        System.out.println("Number of average tokens per document: " + numberOfTokens/countOfFiles);
+        System.out.println("30 most frequent tokens: ");
+
+        TreeMap<String, Integer> sortedTokens= sortDecreasing(tokens);
+        Iterator<Map.Entry<String, Integer>> sortedIterator = sortedTokens.entrySet().iterator();
+        int count=1;
+        while(count<=30){
+            Map.Entry<String, Integer> entry = sortedIterator.next();
+            System.out.println(count + ". " + entry.getKey() + "\t" + entry.getValue());
+            count++;
+        }
+
+        System.out.println("**********************");
+
+        stemTokens = stemTokens(tokens);
+        System.out.println("Number of distinct stems: " + stemTokens.size());
+        System.out.println("Number of stems occuring only once: " + countOnes(stemTokens));
+        System.out.println("30 most frequent stems: ");
+
+        TreeMap<String, Integer> sortedStemTokens= sortDecreasing(stemTokens);
+        Iterator<Map.Entry<String, Integer>> sortedStemIterator = sortedStemTokens.entrySet().iterator();
+        count=1;
+        while(count<=30){
+            Map.Entry<String, Integer> entry = sortedStemIterator.next();
+            System.out.println(count + ". " + entry.getKey() + "\t" + entry.getValue());
+            count++;
+        }
+        System.out.println("Number of average tokens per document: " + numberOfStems/countOfFiles);
     }
+
+    private static TreeMap<String, Integer> stemTokens(TreeMap<String, Integer> tokens) {
+        TreeMap<String, Integer> stems = new TreeMap<String, Integer>();
+        Iterator<Map.Entry<String, Integer>> stemEntryIterator = tokens.entrySet().iterator();
+
+        Stemmer stemmer = new Stemmer();
+        while(stemEntryIterator.hasNext()){
+            Map.Entry<String, Integer> entry= stemEntryIterator.next();
+            char stemChars[] = entry.getKey().toCharArray();
+            stemmer.add(stemChars, stemChars.length);
+            stemmer.stem();
+            numberOfStems+= entry.getValue();
+            if(stems.get(stemmer.toString()) == null)
+                stems.put(stemmer.toString(), entry.getValue());
+            else
+                stems.put(stemmer.toString(), entry.getValue() + 1);
+        }
+
+        return stems;
+    }
+
     private static void scanFiles(String filePath) throws FileNotFoundException {
         File file = new File(filePath);
 
@@ -79,6 +115,21 @@ public class Homework1 {
         }
 
         return countOfOnes;
+    }
+
+    public static TreeMap<String, Integer> sortDecreasing(final TreeMap<String, Integer> tokens){
+        Comparator<String> stringComparator = new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                if (tokens.get(o2).compareTo(tokens.get(o1)) == 0)
+                    return 1;
+                else
+                    return tokens.get(o2).compareTo(tokens.get(o1));
+            }
+        };
+
+        TreeMap<String, Integer> sortedTokens = new TreeMap<String, Integer>(stringComparator);
+        sortedTokens.putAll(tokens);
+        return sortedTokens;
     }
 
     /*
