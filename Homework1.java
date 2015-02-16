@@ -17,6 +17,7 @@ public class Homework1 {
             how to deal with hyphens?
             are non-alphanumeric characters being displayed?
     TODO: sanitize tokens.
+    TODO: remove equal sign from tokens
 
      */
     static TreeMap<String, Integer> tokens = new TreeMap<String, Integer>();
@@ -28,18 +29,25 @@ public class Homework1 {
         String filePath = "E:\\Sem 5\\Information Retrieval\\Homework\\Homework1\\Cranfield_Collection";
 //        String filePath = args[0].toString();
 
+        long startTime = Calendar.getInstance().getTimeInMillis();
+
         try {
             scanFiles(filePath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Iterator<Map.Entry<String, Integer>> entryIterator = tokens.entrySet().iterator();
+   /*     Iterator<Map.Entry<String, Integer>> entryIterator = tokens.entrySet().iterator();
+        while(entryIterator.hasNext()) {
+            Map.Entry<String, Integer> entry = entryIterator.next();
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+*/
 
         System.out.println("Number of tokens: " + numberOfTokens);
         System.out.println("Number of unique tokens: " + tokens.size());
         System.out.println("Number of tokens that occur only once: " + countOnes(tokens));
-        System.out.println("Number of files: " + countOfFiles);
+   //     System.out.println("Number of files: " + countOfFiles);
         System.out.println("Number of average tokens per document: " + numberOfTokens/countOfFiles);
         System.out.println("30 most frequent tokens: ");
 
@@ -52,11 +60,13 @@ public class Homework1 {
             count++;
         }
 
+        System.out.println("Time taken to acquire characteristics: " + (Calendar.getInstance().getTimeInMillis()-startTime) + "ms");
         System.out.println("**********************");
 
         stemTokens = stemTokens(tokens);
         System.out.println("Number of distinct stems: " + stemTokens.size());
-        System.out.println("Number of stems occuring only once: " + countOnes(stemTokens));
+        System.out.println("Number of stems occurring only once: " + countOnes(stemTokens));
+        System.out.println("Number of average tokens per document: " + numberOfStems/countOfFiles);
         System.out.println("30 most frequent stems: ");
 
         TreeMap<String, Integer> sortedStemTokens= sortDecreasing(stemTokens);
@@ -67,7 +77,7 @@ public class Homework1 {
             System.out.println(count + ". " + entry.getKey() + "\t" + entry.getValue());
             count++;
         }
-        System.out.println("Number of average tokens per document: " + numberOfStems/countOfFiles);
+
     }
 
     private static TreeMap<String, Integer> stemTokens(TreeMap<String, Integer> tokens) {
@@ -132,9 +142,6 @@ public class Homework1 {
         return sortedTokens;
     }
 
-    /*
-    TODO: Do we eliminate numbers as tokens?
-     */
     static void fetchWords(File file) throws FileNotFoundException {
         Scanner inputFile = new Scanner(file);
 
@@ -142,9 +149,10 @@ public class Homework1 {
 
             String currentLine = inputFile.nextLine();
             if(currentLine!=null && !(currentLine.contains("<") && currentLine.contains(">"))){
+                currentLine = currentLine.replaceAll("[-]", " ");
                 StringTokenizer stringTokenizer = new StringTokenizer(currentLine);
                 while(stringTokenizer.hasMoreTokens()){
-                    String currentToken = stringTokenizer.nextToken().toString().toLowerCase();
+                    String currentToken = stringTokenizer.nextToken().toLowerCase();
 
                     String currentTokenModified = currentToken.replaceAll("[^a-zA-Z0-9]", "");
 
@@ -160,8 +168,5 @@ public class Homework1 {
                 }
             }
         }
-/*
-TODO: will the file close or will it generate error?
- */
     }
 }
