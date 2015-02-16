@@ -9,25 +9,13 @@ public class Homework1 {
 
 
     static int countOfFiles=0;
-    /*
-    TODO: Sort according to key, then value or only value?
-            Include DocID information?
-            how to deal with numbers?
-            how to deal with acronyms?
-            how to deal with hyphens?
-            are non-alphanumeric characters being displayed?
-    TODO: sanitize tokens.
-    TODO: remove equal sign from tokens
-
-     */
     static TreeMap<String, Integer> tokens = new TreeMap<String, Integer>();
     static TreeMap<String, Integer> stemTokens = new TreeMap<String, Integer>();
     static int numberOfTokens=0;
     static int numberOfStems=0;
 
     public static void main(String args[]){
-        String filePath = "E:\\Sem 5\\Information Retrieval\\Homework\\Homework1\\Cranfield_Collection";
-//        String filePath = args[0].toString();
+         String filePath = args[0].toString();
 
         long startTime = Calendar.getInstance().getTimeInMillis();
 

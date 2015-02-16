@@ -6,7 +6,6 @@ Part of **CS 6322 Information Retrieval** coursework.
 ##Homework1.java 
 Includes code to process the Cranfield documents into tokens. The location of the documents is 
 to be passed to the program. 
-Note: Document destination has been hard-coded for testing purposes.
 
 ##Stemmer.java
 Implementation of Porters Stemming algorithm to obtain the root of a given word. 
