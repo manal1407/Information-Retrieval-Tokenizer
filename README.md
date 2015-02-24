@@ -55,7 +55,7 @@ number of tokens per document and 30 most frequent tokens.
  average=total number of DISTINCT tokens/total number of documents
  ```
 
-* Time taken to acquire the overall text characteristics is approximately 6720ms. 
+* Time taken to acquire the overall text characteristics is approximately 6098ms. 
 
 * The program handles upper and lower case words in the same fashion. They both are converted to lower case. So, "Apple"
 and "apple" are converted to "apple" and are considered as the same token.
