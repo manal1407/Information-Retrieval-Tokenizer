@@ -45,6 +45,16 @@ with other tokens in the map. Using a Comparator and order specified, it will re
 * The program returns information regarding the count of tokens, unique tokens, tokens that occur only once, average 
 number of tokens per document and 30 most frequent tokens. 
 
+* Regarding average number of tokens, the program computes the average in two ways. 
+<br>One:
+```
+ average=total number of tokens/total number of documents
+ ```
+<br>Two:
+```
+ average=total number of DISTINCT tokens/total number of documents
+ ```
+
 * Time taken to acquire the overall text characteristics is approximately 6720ms. 
 
 * The program handles upper and lower case words in the same fashion. They both are converted to lower case. So, "Apple"
@@ -78,6 +88,7 @@ Number of tokens: 235890 <br>
 Number of unique tokens: 11502<br>
 Number of tokens that occur only once: 5468<br>
 Number of average tokens per document: 168<br>
+Number of average distinct tokens per file: 94<br>
 30 most frequent tokens: <br>
 
 1. the	19448
@@ -110,7 +121,7 @@ Number of average tokens per document: 168<br>
 28. mach	823
 29. theory	788
 30. shock	712
-<br>Time taken to acquire characteristics: 6721ms<br>
+<br>Time taken to acquire characteristics: 6098ms
 
 **Problem 2 results:**
 Number of distinct stems: 8718<br>
