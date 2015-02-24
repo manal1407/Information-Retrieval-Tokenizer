@@ -48,14 +48,14 @@ number of tokens per document and 30 most frequent tokens.
 * Regarding average number of tokens, the program computes the average in two ways. 
 <br>One:
 ```
- average=total number of tokens/total number of documents
+ average=total number of tokens in the entire collection/total number of documents
  ```
 <br>Two:
 ```
- average=total number of DISTINCT tokens/total number of documents
+ average=total number of DISTINCT tokens in each document/total number of documents
  ```
 
-* Time taken to acquire the overall text characteristics is approximately 6098ms. 
+* Time taken to acquire the overall text characteristics is approximately 7143ms. 
 
 * The program handles upper and lower case words in the same fashion. They both are converted to lower case. So, "Apple"
 and "apple" are converted to "apple" and are considered as the same token.
@@ -79,16 +79,16 @@ This open source implementation was developed by Martin Porter. The implementati
 * By iterating through the tokens present in the `*tokens*` TreeMap, each token is converted to a character array and 
  passed to the `add()` method of `Stemmer.java`.
 
-* Similar to Problem 1, we count the number of stems, stems that occur only once, number of average stems per document, 30 most 
- frequent stems. 
+* Similar to Problem 1, we count the number of stems, stems that occur only once, number of average stems per document, 
+30 most frequent stems. 
 
 ##Output: 
 **Problem 1 results:**<br>
-Number of tokens: 235890 <br>
+Number of tokens: 235890<br>
 Number of unique tokens: 11502<br>
 Number of tokens that occur only once: 5468<br>
 Number of average tokens per document: 168<br>
-Number of average distinct tokens per file: 94<br>
+Number of average 'distinct' tokens per document: 94<br>
 30 most frequent tokens: <br>
 
 1. the	19448
@@ -121,12 +121,13 @@ Number of average distinct tokens per file: 94<br>
 28. mach	823
 29. theory	788
 30. shock	712
-<br>Time taken to acquire characteristics: 6098ms
+<br>Time taken to acquire characteristics: 7143ms
 
 **Problem 2 results:**
 Number of distinct stems: 8718<br>
 Number of stems occurring only once: 4336<br>
-Number of average tokens per document: 168<br>
+Number of average stems per document: 168<br>
+Number of average 'distinct' stems per document: 90<br>
 30 most frequent stems: <br>
 
 1. the	19448
@@ -137,25 +138,25 @@ Number of average tokens per document: 168<br>
 6. to	4560
 7. is	4113
 8. for	3491
-9. with	2263
-10. at	1834
-11. by	1755
-12. that	1570
-13. an	1388
-14. boundari	1157
-15. from	1116
-16. as	1114
-17. thi	1081
-18. which	975
-19. result	886
-20. theori	789
-21. wa	699
-22. two	618
-23. been	590
-24. were	583
-25. bodi	546
-26. given	520
-27. effect	512
-28. veloc	502
-29. these	500
-30. or	482
+9. ar	2456
+10. with	2263
+11. on	2261
+12. flow	2079
+13. at	1834
+14. by	1755
+15. that	1570
+16. an	1388
+17. pressur	1382
+18. be	1368
+19. number	1347
+20. boundari	1185
+21. layer	1134
+22. from	1116
+23. as	1114
+24. result	1087
+25. thi	1081
+26. it	1041
+27. effect	996
+28. which	975
+29. method	886
+30. theori	881
