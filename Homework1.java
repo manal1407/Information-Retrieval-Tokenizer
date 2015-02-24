@@ -13,9 +13,11 @@ public class Homework1 {
     static TreeMap<String, Integer> stemTokens = new TreeMap<String, Integer>();
     static int numberOfTokens=0;
     static int numberOfStems=0;
+    static int avgFile=0;
 
     public static void main(String args[]){
-         String filePath = args[0].toString();
+//         String filePath = args[0].toString();
+        String filePath = "E:\\Sem 5\\Information Retrieval\\Homework\\Homework1\\Cranfield_Collection";
 
         long startTime = Calendar.getInstance().getTimeInMillis();
 
@@ -37,6 +39,7 @@ public class Homework1 {
         System.out.println("Number of tokens that occur only once: " + countOnes(tokens));
    //     System.out.println("Number of files: " + countOfFiles);
         System.out.println("Number of average tokens per document: " + numberOfTokens/countOfFiles);
+        System.out.println("Number of average distinct tokens per file: " + avgFile/countOfFiles);
         System.out.println("30 most frequent tokens: ");
 
         TreeMap<String, Integer> sortedTokens= sortDecreasing(tokens);
@@ -54,7 +57,7 @@ public class Homework1 {
         stemTokens = stemTokens(tokens);
         System.out.println("Number of distinct stems: " + stemTokens.size());
         System.out.println("Number of stems occurring only once: " + countOnes(stemTokens));
-        System.out.println("Number of average tokens per document: " + numberOfStems/countOfFiles);
+        System.out.println("Number of average stems per document: " + numberOfStems/countOfFiles);
         System.out.println("30 most frequent stems: ");
 
         TreeMap<String, Integer> sortedStemTokens= sortDecreasing(stemTokens);
@@ -132,7 +135,7 @@ public class Homework1 {
 
     static void fetchWords(File file) throws FileNotFoundException {
         Scanner inputFile = new Scanner(file);
-
+        TreeMap<String, Integer> avgPerFile = new TreeMap<String, Integer>();
         while(inputFile.hasNextLine()){
 
             String currentLine = inputFile.nextLine();
@@ -152,9 +155,16 @@ public class Homework1 {
                             tokens.put(currentTokenModified, 1);
                         else
                             tokens.put(currentTokenModified, tokens.get(currentTokenModified) + 1);
+
+                        if(avgPerFile.get(currentTokenModified) == null)
+                            avgPerFile.put(currentTokenModified, 1);
+                        else
+                            avgPerFile.put(currentTokenModified, avgPerFile.get(currentTokenModified) + 1);
                     }
                 }
             }
         }
+        avgFile+= avgPerFile.size();
+        avgPerFile.clear();
     }
 }
